@@ -49,6 +49,7 @@ function setMargin(eventDict, event, numOverlaps, eventColumns)
 
 function createEvent (eventDict, eventColumns)
 {
+    start = eventDict.start
     width = calendarWidth/eventDict.overlaps;
     container = document.querySelector('.cal-container');
     container.style.zIndex = '-1';
