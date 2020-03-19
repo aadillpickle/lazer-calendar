@@ -1,17 +1,28 @@
-
 const calendarWidth = 600;
 const itemColor = '#606EA2'; 
 const eventBgColor = '#FFFFFF';
 const locColor = '#B1B3B2';
-var eventColumns = []
+var eventColumns = [];
+var allEvents = [];
 Number.prototype.isBetween = function(a, b){return (this >= a && this <= b);}
+
+function clearCalendar()
+{
+    document.querySelector(".cal-container").innerHTML = "";
+}
 
 //main method
 function layOutDay(eventDicts) 
-{    
-    addOverlaps(eventDicts)
-    mostOverlaps = findMostOverlaps(eventDicts);
-
+{   
+    clearCalendar();
+    //clear the board everytime new events are to be laid out then preform
+    //functions using list of all events both old and new
+    for (let i = 0; i < eventDicts.length; i++)
+    {
+        allEvents.push(eventDicts[i]);
+    }
+    addOverlaps(allEvents);
+    mostOverlaps = findMostOverlaps(allEvents);
     //make a 2d array of empty arrays with the length of the event with the most overlaps 
     eventColumns = new Array(mostOverlaps);
     for (var i = 0; i < eventColumns.length; i++) {
@@ -19,9 +30,9 @@ function layOutDay(eventDicts)
     }
     //create events given dictionaries describing events with their starting times, 
     //ending times and # of times they overlap with other events
-    for (let i = 0; i < eventDicts.length; i++)
+    for (let i = 0; i < allEvents.length; i++)
     {
-        createEvent(eventDicts[i], eventColumns);
+        createEvent(allEvents[i], eventColumns);
     }
 }
 
@@ -38,12 +49,12 @@ function setMargin(eventDict, event, numOverlaps, eventColumns)
             // columns was initialized equal to the maximum number of overlaps.
             if (eventColumns[i] == [] || isOverlapping(eventDict, eventColumns[i]) == false)
             {
-                console.log(eventDict, i);
+                //console.log(eventDict, i);
                 event.style.marginLeft = calendarWidth * i / numOverlaps + 'px';
                 eventColumns[i].push(eventDict); // add the event to 
+                break;
             }
         }
-        console.log(eventColumns)
     }
 }
 
@@ -66,7 +77,6 @@ function createEvent (eventDict, eventColumns)
 
 function isOverlapping(eventDict, eventsInColumn)
 {
-    console.log(eventsInColumn);
     var currentEventStart = eventDict.start
     var currentEventEnd = eventDict.end
     for (let i = 0; i < eventsInColumn.length; i++)

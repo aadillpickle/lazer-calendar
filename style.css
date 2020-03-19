@@ -33,3 +33,10 @@ strong
     font-size: 14px;
     color: #656766;
 }
+
+.clear-button
+{
+    border: 6px solid #606EA2;
+    padding: 15px 32px;
+    text-align: center;
+}
