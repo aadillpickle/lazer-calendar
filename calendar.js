@@ -15,6 +15,7 @@ function clearCalendar()
 function layOutDay(eventDicts) 
 {   
     clearCalendar();
+    console.log(allEvents);
     //clear the board everytime new events are to be laid out then preform
     //functions using list of all events both old and new
     for (let i = 0; i < eventDicts.length; i++)
@@ -49,7 +50,6 @@ function setMargin(eventDict, event, numOverlaps, eventColumns)
             // columns was initialized equal to the maximum number of overlaps.
             if (eventColumns[i] == [] || isOverlapping(eventDict, eventColumns[i]) == false)
             {
-                //console.log(eventDict, i);
                 event.style.marginLeft = calendarWidth * i / numOverlaps + 'px';
                 eventColumns[i].push(eventDict); // add the event to 
                 break;
@@ -119,27 +119,31 @@ function addOverlaps(events)
 // checks how many times an event overlaps with other events 
 // (including itself) and adds that as a kv pair to the dict describing the event 
 function checkOverlaps(events, eventDict) 
-{    
+{   
+    //problem with this fxn is that if theres something that has more overlapping starts 
+    //then it'll set the numoverlaps to that event even if only the end of that event overlaps with another event
     start = eventDict.start
     end = eventDict.end
     numOverlappingStarts = 0;
     numOverlappingEnds = 0;
-
     for (let i = 0; i < events.length; i++)
     {
+        event = events[i]
         eventStart = events[i].start;
         eventEnd = events[i].end;
         if ((start.isBetween(eventStart, eventEnd)))
         {
-            numOverlappingStarts++  
+            numOverlappingStarts++;
         }
         if (end.isBetween(eventStart, eventEnd))
         {
             numOverlappingEnds++;
         }
     }
+    
     // add the number of times the event overlaps to the dict describing its start and end
-    eventDict['overlaps'] = Math.max(numOverlappingStarts, numOverlappingEnds); 
+    numOverlaps = Math.max(numOverlappingStarts, numOverlappingEnds);
+    eventDict['overlaps'] = numOverlaps
 }
 
 /* ---------------------------------styling functions--------------------------------- */
