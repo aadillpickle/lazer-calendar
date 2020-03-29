@@ -36,8 +36,19 @@
                     <p class = "time">8:30</p>
                     <p class = "time"><strong>9:00</strong> PM</p>  
                 </div>
+                
                 <div class = "col-8">
                     <div class="cal-container"></div>
+                    <br>
+                    <button class = 'btn btn-dark' onclick = "clearCalendar()">Clear</button>
+                    <p>Note: To test, invoke layOutEvents() from the console with a list of events 
+                        that looks <br> something like this: <br>
+                        layOutDay([<br>
+                        {start: 30, end: 150}, <br>
+                        {start: 540, end: 600}, <br>
+                        {start: 560, end: 620},<br>
+                        {start: 610, end: 670} <br>
+                    ])
                 </div>
             </div>   
             <script src = "calendar.js"></script>
